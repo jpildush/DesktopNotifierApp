@@ -13,6 +13,7 @@ class notifyApp:
             if option <= 10:
                 # User checking here
                 print("Thank you for signing in!")
+                self.runApplicationFor(option)
 
 
 
