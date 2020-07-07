@@ -1,14 +1,33 @@
 import time
 import notify2
+from RSSinfo import RSSINFO
 from getstories import getStories
 
 class UserFavourites:
     def __init__(self, currentUser):
         self.userName = currentUser
         self.maxLimit = 20
-        self.favourites = []
+        self.favourites = {}
 
     def addRSS(self):
+        if len(self.favourites) <= self.maxLimit:
+            RSS_URL = input("Please enter RSS URL: ").strip()
+            if len(RSS_URL) < 200:
+                if ".xml" in RSS_URL.split("/")[-1]:
+                    while True:
+                        RSS_NAME = input("Please provide name for new RSS: ").strip()
+                        if len(RSS_NAME) < 20:
+                             break
+                        else:
+                            print("RSS Name too long!")
+
+                    self.favourites[RSS_NAME] = RSSINFO(RSS_NAME, RSS_URL)
+            else:
+                print("Link too long!")
+        else:
+            print("Max of 20 saved RSS feeds reached!")
+
+    def showRSS(self):
         RSS_URL = input("Please enter RSS URL: ").strip()
         if ".xml" in RSS_URL.split("/")[-1]:
             article = getStories(RSS_URL)
